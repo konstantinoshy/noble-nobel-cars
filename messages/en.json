@@ -1,0 +1,142 @@
+{
+  "Common": {
+    "home": "Home",
+    "cars": "Cars",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout",
+    "language": "Language",
+    "noCarsFound": "No cars found"
+  },
+  "Nav": {
+    "home": "Home",
+    "cars": "Cars",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "HomePage": {
+    "heroTitle": "Find Your Perfect Pre-Owned Vehicle",
+    "heroSubtitle": "Quality used cars with warranty and full transparency",
+    "heroCta": "Browse Our Cars",
+    "featuredTitle": "Latest Arrivals",
+    "featuredSubtitle": "The newest additions to our collection",
+    "viewAllCars": "View All Cars →"
+  },
+  "CarsPage": {
+    "title": "Our Cars",
+    "subtitle": "Browse our collection",
+    "results": "{count, plural, =0 {No cars} =1 {1 car} other {# cars}}",
+    "noResults": "No cars match your criteria",
+    "clearFilters": "Clear Filters",
+    "description": "Browse our collection"
+  },
+  "Filters": {
+    "make": "Make",
+    "allMakes": "All Makes",
+    "fuelType": "Fuel Type",
+    "allFuelTypes": "All Fuel Types",
+    "transmission": "Transmission",
+    "allTransmissions": "All Transmissions",
+    "yearFrom": "Year From",
+    "yearTo": "Year To",
+    "priceFrom": "Price From (€)",
+    "priceTo": "Price To (€)",
+    "sort": "Sort By",
+    "sortNewest": "Newest First",
+    "sortPriceAsc": "Price ↑",
+    "sortPriceDesc": "Price ↓",
+    "petrol": "Petrol",
+    "diesel": "Diesel",
+    "hybrid": "Hybrid",
+    "electric": "Electric",
+    "manual": "Manual",
+    "automatic": "Automatic",
+    "filters": "Filters"
+  },
+  "CarDetail": {
+    "specifications": "Specifications",
+    "year": "Year",
+    "mileage": "Mileage",
+    "fuelType": "Fuel Type",
+    "transmission": "Transmission",
+    "engineCc": "Engine (cc)",
+    "color": "Color",
+    "price": "Price",
+    "status": "Status",
+    "available": "Available",
+    "reserved": "Reserved",
+    "sold": "Sold",
+    "backToCars": "← Back to Cars",
+    "notFound": "Car not found",
+    "noImages": "No photos available"
+  },
+  "InquiryForm": {
+    "title": "Interested? Get in touch",
+    "name": "Full Name",
+    "namePlaceholder": "e.g. John Smith",
+    "phone": "Phone",
+    "phonePlaceholder": "e.g. +30 691 234 5678",
+    "email": "Email",
+    "emailPlaceholder": "e.g. john@example.com",
+    "message": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "consent": "I agree to the",
+    "privacyPolicy": "Privacy Policy",
+    "consentSuffix": "and consent to the processing of my data",
+    "submit": "Send Inquiry",
+    "sending": "Sending...",
+    "success": "Your inquiry was sent successfully! We will be in touch soon.",
+    "error": "Something went wrong. Please try again."
+  },
+  "AboutPage": {
+    "title": "About Us",
+    "description": "Learn more about our company",
+    "storyTitle": "Our Story",
+    "storyText": "Noble Nobel Cars was founded with a vision: to make buying a used car an experience built on trust and transparency. Every car in our collection undergoes a thorough technical inspection before being offered for sale.",
+    "whyUsTitle": "Why Choose Us",
+    "reason1Title": "Certified Vehicles",
+    "reason1Text": "Every car is inspected across 150+ checkpoints before we offer it.",
+    "reason2Title": "Transparent Pricing",
+    "reason2Text": "No hidden fees. The price you see is the price you pay.",
+    "reason3Title": "Peace of Mind Warranty",
+    "reason3Text": "We provide warranty on every vehicle for your peace of mind.",
+    "valuesTitle": "Our Values",
+    "value1": "Quality",
+    "value1Text": "We select only the best cars for our customers.",
+    "value2": "Trust",
+    "value2Text": "We build long-term relationships based on honesty.",
+    "value3": "Service",
+    "value3Text": "Customer satisfaction is our top priority."
+  },
+  "ContactPage": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you",
+    "description": "Get in touch with us",
+    "addressLabel": "Address",
+    "addressValue": "123 Vouliagmenis Avenue\nAthens 11636, Greece",
+    "phoneLabel": "Phone",
+    "phoneValue": "+30 210 1234567",
+    "emailLabel": "Email",
+    "emailValue": "info@noblenobelcars.gr",
+    "hoursLabel": "Business Hours",
+    "hoursWeekday": "Monday – Friday: 09:00 – 20:00",
+    "hoursSaturday": "Saturday: 09:00 – 15:00",
+    "hoursSunday": "Sunday: Closed"
+  },
+  "Footer": {
+    "rights": "© {year} Noble Nobel Cars. All rights reserved.",
+    "privacy": "Privacy Policy"
+  },
+  "CarCard": {
+    "km": "km"
+  },
+  "AdminPage": {
+    "title": "Admin Dashboard",
+    "loginTitle": "Admin Login",
+    "loginButton": "Sign In",
+    "email": "Email",
+    "password": "Password"
+  }
+}
