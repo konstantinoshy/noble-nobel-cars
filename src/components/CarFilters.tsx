@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CarFiltersProps {
   makes: string[];
@@ -15,6 +15,21 @@ export default function CarFilters({ makes }: CarFiltersProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
+
+  // ---- Debounced number inputs ----
+  // Local state mirrors URL params; updates are debounced before navigation.
+  const [yearFrom, setYearFrom] = useState(searchParams.get("year_from") || "");
+  const [yearTo, setYearTo] = useState(searchParams.get("year_to") || "");
+  const [priceFrom, setPriceFrom] = useState(searchParams.get("price_from") || "");
+  const [priceTo, setPriceTo] = useState(searchParams.get("price_to") || "");
+
+  // Keep local state in sync if URL changes externally (e.g. "Clear Filters")
+  useEffect(() => setYearFrom(searchParams.get("year_from") || ""), [searchParams]);
+  useEffect(() => setYearTo(searchParams.get("year_to") || ""), [searchParams]);
+  useEffect(() => setPriceFrom(searchParams.get("price_from") || ""), [searchParams]);
+  useEffect(() => setPriceTo(searchParams.get("price_to") || ""), [searchParams]);
+
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const createQueryString = useCallback(
     (params: Record<string, string>) => {
@@ -31,10 +46,27 @@ export default function CarFilters({ makes }: CarFiltersProps) {
     [searchParams]
   );
 
+  /** Immediate navigation — used by select dropdowns */
   function updateFilter(key: string, value: string) {
     const qs = createQueryString({ [key]: value });
     router.push(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
   }
+
+  /** Debounced navigation — used by number inputs */
+  function updateFilterDebounced(key: string, value: string) {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const qs = createQueryString({ [key]: value });
+      router.push(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
+    }, 300);
+  }
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
 
   function clearAll() {
     router.push(pathname, { scroll: false });
@@ -160,7 +192,7 @@ export default function CarFilters({ makes }: CarFiltersProps) {
           </select>
         </div>
 
-        {/* Year range */}
+        {/* Year range — debounced */}
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-surface-500">
@@ -169,8 +201,11 @@ export default function CarFilters({ makes }: CarFiltersProps) {
             <input
               type="number"
               placeholder="2015"
-              value={searchParams.get("year_from") || ""}
-              onChange={(e) => updateFilter("year_from", e.target.value)}
+              value={yearFrom}
+              onChange={(e) => {
+                setYearFrom(e.target.value);
+                updateFilterDebounced("year_from", e.target.value);
+              }}
               className="w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm text-surface-800 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
@@ -181,14 +216,17 @@ export default function CarFilters({ makes }: CarFiltersProps) {
             <input
               type="number"
               placeholder="2025"
-              value={searchParams.get("year_to") || ""}
-              onChange={(e) => updateFilter("year_to", e.target.value)}
+              value={yearTo}
+              onChange={(e) => {
+                setYearTo(e.target.value);
+                updateFilterDebounced("year_to", e.target.value);
+              }}
               className="w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm text-surface-800 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
         </div>
 
-        {/* Price range */}
+        {/* Price range — debounced */}
         <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-surface-500">
@@ -197,8 +235,11 @@ export default function CarFilters({ makes }: CarFiltersProps) {
             <input
               type="number"
               placeholder="5000"
-              value={searchParams.get("price_from") || ""}
-              onChange={(e) => updateFilter("price_from", e.target.value)}
+              value={priceFrom}
+              onChange={(e) => {
+                setPriceFrom(e.target.value);
+                updateFilterDebounced("price_from", e.target.value);
+              }}
               className="w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm text-surface-800 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
@@ -209,8 +250,11 @@ export default function CarFilters({ makes }: CarFiltersProps) {
             <input
               type="number"
               placeholder="50000"
-              value={searchParams.get("price_to") || ""}
-              onChange={(e) => updateFilter("price_to", e.target.value)}
+              value={priceTo}
+              onChange={(e) => {
+                setPriceTo(e.target.value);
+                updateFilterDebounced("price_to", e.target.value);
+              }}
               className="w-full rounded-lg border border-surface-200 bg-surface-50 px-3 py-2 text-sm text-surface-800 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
