@@ -14,7 +14,8 @@
     "home": "Home",
     "cars": "Cars",
     "about": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "callUs": "Call Us"
   },
   "HomePage": {
     "heroTitle": "Find Your Perfect Pre-Owned Vehicle",
@@ -89,6 +90,11 @@
     "sending": "Sending...",
     "success": "Your inquiry was sent successfully! We will be in touch soon.",
     "error": "Something went wrong. Please try again."
+  },
+  "StickyContact": {
+    "callNow": "Call Now",
+    "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hi, I'm interested in the {car}. Is it still available?"
   },
   "AboutPage": {
     "title": "About Us",

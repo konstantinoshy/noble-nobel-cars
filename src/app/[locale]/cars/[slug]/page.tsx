@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import PhotoGallery from "@/components/PhotoGallery";
 import InquiryForm from "@/components/InquiryForm";
+import StickyContact from "@/components/StickyContact";
 
 type Props = {
   params: { locale: string; slug: string };
@@ -104,6 +105,9 @@ export default async function CarDetailPage({ params }: Props) {
           <InquiryForm carId={car.id} />
         </div>
       </div>
+
+      {/* Sticky Call / WhatsApp floating buttons */}
+      <StickyContact carTitle={car.title} />
     </main>
   );
 }
