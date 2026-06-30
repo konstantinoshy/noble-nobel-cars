@@ -10,8 +10,8 @@ export async function middleware(request: NextRequest) {
   // 1. Run the next-intl middleware first (handles locale detection/redirect)
   const intlResponse = intlMiddleware(request);
 
-  // 2. Refresh the Supabase auth session
-  const { user } = await updateSession(request);
+  // 2. Refresh the Supabase auth session (cookies attached to intlResponse)
+  const { user, response } = await updateSession(request, intlResponse);
 
   // 3. Determine the current locale from the pathname
   const pathname = request.nextUrl.pathname;
@@ -33,7 +33,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  return intlResponse;
+  return response;
 }
 
 export const config = {
