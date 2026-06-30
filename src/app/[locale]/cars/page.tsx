@@ -22,6 +22,9 @@ export default async function CarsPage({
   // Parse search params into filter object
   const filters: FilterTypes = {
     make: searchParams.make as string,
+    model: searchParams.model as string,
+    body_type: searchParams.body_type as string,
+    color: searchParams.color as string,
     fuel_type: searchParams.fuel_type as string,
     transmission: searchParams.transmission as string,
     sort: searchParams.sort as FilterTypes["sort"],
@@ -31,6 +34,12 @@ export default async function CarsPage({
   if (searchParams.year_to) filters.year_to = parseInt(searchParams.year_to as string);
   if (searchParams.price_from) filters.price_from = parseInt(searchParams.price_from as string);
   if (searchParams.price_to) filters.price_to = parseInt(searchParams.price_to as string);
+  if (searchParams.mileage_from) filters.mileage_from = parseInt(searchParams.mileage_from as string);
+  if (searchParams.mileage_to) filters.mileage_to = parseInt(searchParams.mileage_to as string);
+  if (searchParams.engine_cc_from) filters.engine_cc_from = parseInt(searchParams.engine_cc_from as string);
+  if (searchParams.engine_cc_to) filters.engine_cc_to = parseInt(searchParams.engine_cc_to as string);
+  if (searchParams.hp_from) filters.hp_from = parseInt(searchParams.hp_from as string);
+  if (searchParams.hp_to) filters.hp_to = parseInt(searchParams.hp_to as string);
 
   // Fetch data
   const [cars, makes] = await Promise.all([

@@ -5,13 +5,33 @@ import type { Car, CarWithImages } from "@/lib/types/database";
 
 export interface CarFilters {
   make?: string;
+  model?: string;
+  body_type?: string;
+  color?: string;
   fuel_type?: string;
   transmission?: string;
   year_from?: number;
   year_to?: number;
   price_from?: number;
   price_to?: number;
-  sort?: "newest" | "price_asc" | "price_desc";
+  mileage_from?: number;
+  mileage_to?: number;
+  engine_cc_from?: number;
+  engine_cc_to?: number;
+  hp_from?: number;
+  hp_to?: number;
+  sort?:
+    | "last_modified"
+    | "price_asc"
+    | "price_desc"
+    | "registration"
+    | "year_desc"
+    | "year_asc"
+    | "make_model"
+    | "mileage_desc"
+    | "mileage_asc"
+    | "hp_desc"
+    | "hp_asc";
 }
 
 export interface CarWithPrimaryImage extends Car {
@@ -73,27 +93,22 @@ export async function getFilteredCars(
     .eq("status", "available");
 
   // Apply filters
-  if (filters.make) {
-    query = query.eq("make", filters.make);
-  }
-  if (filters.fuel_type) {
-    query = query.eq("fuel_type", filters.fuel_type);
-  }
-  if (filters.transmission) {
-    query = query.eq("transmission", filters.transmission);
-  }
-  if (filters.year_from) {
-    query = query.gte("year", filters.year_from);
-  }
-  if (filters.year_to) {
-    query = query.lte("year", filters.year_to);
-  }
-  if (filters.price_from) {
-    query = query.gte("price_eur", filters.price_from);
-  }
-  if (filters.price_to) {
-    query = query.lte("price_eur", filters.price_to);
-  }
+  if (filters.make) query = query.eq("make", filters.make);
+  if (filters.model) query = query.ilike("model", `%${filters.model}%`);
+  if (filters.body_type) query = query.eq("body_type", filters.body_type);
+  if (filters.color) query = query.ilike("color", `%${filters.color}%`);
+  if (filters.fuel_type) query = query.eq("fuel_type", filters.fuel_type);
+  if (filters.transmission) query = query.eq("transmission", filters.transmission);
+  if (filters.year_from) query = query.gte("year", filters.year_from);
+  if (filters.year_to) query = query.lte("year", filters.year_to);
+  if (filters.price_from) query = query.gte("price_eur", filters.price_from);
+  if (filters.price_to) query = query.lte("price_eur", filters.price_to);
+  if (filters.mileage_from) query = query.gte("mileage_km", filters.mileage_from);
+  if (filters.mileage_to) query = query.lte("mileage_km", filters.mileage_to);
+  if (filters.engine_cc_from) query = query.gte("engine_cc", filters.engine_cc_from);
+  if (filters.engine_cc_to) query = query.lte("engine_cc", filters.engine_cc_to);
+  if (filters.hp_from) query = query.gte("horsepower", filters.hp_from);
+  if (filters.hp_to) query = query.lte("horsepower", filters.hp_to);
 
   // Apply sorting
   switch (filters.sort) {
@@ -103,8 +118,33 @@ export async function getFilteredCars(
     case "price_desc":
       query = query.order("price_eur", { ascending: false });
       break;
-    case "newest":
+    case "registration":
+      query = query.order("created_at", { ascending: false });
+      break;
+    case "year_desc":
+      query = query.order("year", { ascending: false });
+      break;
+    case "year_asc":
+      query = query.order("year", { ascending: true });
+      break;
+    case "make_model":
+      query = query.order("make", { ascending: true }).order("model", { ascending: true });
+      break;
+    case "mileage_desc":
+      query = query.order("mileage_km", { ascending: false });
+      break;
+    case "mileage_asc":
+      query = query.order("mileage_km", { ascending: true });
+      break;
+    case "hp_desc":
+      query = query.order("horsepower", { ascending: false });
+      break;
+    case "hp_asc":
+      query = query.order("horsepower", { ascending: true });
+      break;
+    case "last_modified":
     default:
+      // using created_at as fallback for last_modified since we don't have updated_at
       query = query.order("created_at", { ascending: false });
       break;
   }
